@@ -1,8 +1,7 @@
 package com.tts.rsvrInClass.model;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="id")
 public class Event {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="event_id")
 	private Long id;
 	private String name;
@@ -24,9 +25,8 @@ public class Event {
 	private Float cost;
 	private Date eventDate;
 	
-	@JsonManagedReference
 	@ManyToMany(mappedBy = "events")
-	private Set<User> users = new HashSet<>();
+	private List<User> users;
 	
 	public Event() {};
 
@@ -73,11 +73,11 @@ public class Event {
 		return id;
 	}
 
-	public Set<User> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 	

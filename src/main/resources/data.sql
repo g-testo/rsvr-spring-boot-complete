@@ -1,3 +1,0 @@
-INSERT INTO user(user_id, name, email) VALUES (1, 'Jane Smith', 'jsmith@smith.com'), (2, 'Bonnie Rait', 'brait@rait.com');
-INSERT INTO event(event_id, name, location, cost, event_date) VALUES (3, 'Music at the Marsh','https://www.musicatthemarsh.com', 50, 20200101), (4, 'Raving in the Rainforest','https://www.ravingintherainforest.com', 5, 2020702);
-INSERT INTO user_event(user_id, event_id) VALUES (1, 3), (1, 4), (2, 4);
