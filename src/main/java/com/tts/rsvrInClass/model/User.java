@@ -13,16 +13,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="user_id")
 	private Long id;
 	private String name;
 	private String email;
 	
+	@JsonBackReference
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name = "user_event", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
 	private Set<Event> events = new HashSet<>();
@@ -60,6 +64,14 @@ public class User {
 
 	public void setEvents(Set<Event> events) {
 		this.events = events;
+	}
+	
+	public void addEvent(Event event) {
+		this.events.add(event);
+	}
+	
+	public void removeEvent(Event event) {
+		this.events.remove(event);
 	}
 
 	@Override

@@ -11,10 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
+//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="id", scope = User.class)
+
 public class Event {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="event_id")
 	private Long id;
 	private String name;
@@ -22,6 +27,7 @@ public class Event {
 	private Float cost;
 	private Date eventDate;
 	
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "events")
 	private Set<User> users = new HashSet<>();
 	
@@ -76,6 +82,14 @@ public class Event {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+	
+	public void addUser(User user) {
+		this.users.add(user);
+	}
+	
+	public void removeUser(User user) {
+		this.users.remove(user);
 	}
 
 	@Override
