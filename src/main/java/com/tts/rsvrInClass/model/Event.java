@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Event {
 	private Float cost;
 	private Date eventDate;
 	
-	@OneToMany(mappedBy = "event")
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     Set<Reservation> reservations;
 	
 	Long reservationRef;
