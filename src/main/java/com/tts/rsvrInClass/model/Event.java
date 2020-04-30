@@ -1,12 +1,16 @@
 package com.tts.rsvrInClass.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Event {
@@ -18,6 +22,9 @@ public class Event {
 	private String location;
 	private Float cost;
 	private Date eventDate;
+	
+	@OneToMany(mappedBy = "event")
+    Set<Reservation> reservations;
 	
 	public Event() {};
 
@@ -62,6 +69,19 @@ public class Event {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Set<User> getUsers() {
+		
+		return reservations.stream().map(res->{
+			res.user.setReservations(new HashSet<>());
+			return res.user;
+		}).collect(Collectors.toSet());
+
+	}
+
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	@Override
