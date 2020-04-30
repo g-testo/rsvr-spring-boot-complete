@@ -35,13 +35,13 @@ public class EventController {
 	}
 	
 	@PostMapping()
-	public Event saveEvent(@RequestBody Event event) {
-		return eventServiceImpl.saveEvent(event);
+	public void saveEvent(@RequestBody Event event) {
+		eventServiceImpl.saveEvent(event);
 	}
 	
 	@PutMapping("/{id}")
-	public Event updateEvent(@PathVariable Long id, @RequestBody Event event) {
-		return eventServiceImpl.updateEventById(id, event);
+	public void updateEvent(@PathVariable Long id, @RequestBody Event event) {
+		eventServiceImpl.updateEventById(id, event);
 	}
 	
 	@DeleteMapping("/{id}")

@@ -35,13 +35,13 @@ public class UserController {
 	}
 	
 	@PostMapping()
-	public User saveUser(@RequestBody User user) {
-		return userServiceImpl.saveUser(user);
+	public void saveUser(@RequestBody User user) {
+		userServiceImpl.saveUser(user);
 	}
 	
 	@PutMapping("/{id}")
-	public User updateUser(@PathVariable Long id, @RequestBody User user) {
-		return userServiceImpl.updateUserById(id, user);
+	public void updateUser(@PathVariable Long id, @RequestBody User user) {
+		userServiceImpl.updateUserById(id, user);
 	}
 	
 	@DeleteMapping("/{id}")
