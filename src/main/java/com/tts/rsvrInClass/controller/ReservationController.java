@@ -3,10 +3,11 @@ package com.tts.rsvrInClass.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tts.rsvrInClass.model.Event;
@@ -28,37 +29,27 @@ public class ReservationController {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	@GetMapping()
-	public void test() {
-		
-		Event event = eventServiceImpl.findEventById(2L); 
-		User user = userServiceImpl.findUserById(1L);
-		Reservation reservation = new Reservation(user, event, "Test");
-		reservationRepository.save(reservation);
-		
-//		Set<Reservation> resSet = new HashSet<>();
-//		resSet.add(reservation);
-//		event.setReservations(resSet);
-//		user.setReservations(resSet);
-//		userServiceImpl.saveUser(user);
-//		eventServiceImpl.saveEvent(event);
-		
-		
-	}
-	
 	@PostMapping()
-	public void addReservation() {
-
+	public void addReservation(@RequestParam Long userId, @RequestParam Long eventId, @RequestParam(required = false) String status) {
+		if(status == null) {
+			status = "Pending";
+		}
+		Event event = eventServiceImpl.findEventById(eventId);
+		User user = userServiceImpl.findUserById(userId);
+		Reservation reservation = new Reservation(user, event, status);
+		reservationRepository.save(reservation);
 	}
 	
 	@PutMapping("/{id}")
-	public void udpateReservation() {		
-
+	public void changeStatus(@PathVariable Long id, @RequestParam String status) {
+		Reservation reservation = reservationRepository.findReservationById(id);
+		reservation.setStatus(status);
+		reservationRepository.save(reservation);
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteReservationById() {
-
+	public void deleteReservationById(@PathVariable Long id) {
+		reservationRepository.deleteById(id);
 	}
 	
 }

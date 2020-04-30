@@ -20,6 +20,9 @@ public class User {
 	private String name;
 	private String email;
 	
+	Long reservationRef;
+	String reservationStatus;
+	
 	@OneToMany(mappedBy = "user")
     Set<Reservation> reservations;
 	
@@ -28,6 +31,22 @@ public class User {
 	public User(String name, String email) {
 		this.name = name;
 		this.email = email;
+	}
+
+	public Long getReservationRef() {
+		return reservationRef;
+	}
+
+	public void setReservationRef(Long reservationRef) {
+		this.reservationRef = reservationRef;
+	}
+
+	public String getReservationStatus() {
+		return reservationStatus;
+	}
+
+	public void setReservationStatus(String reservationStatus) {
+		this.reservationStatus = reservationStatus;
 	}
 
 	public String getName() {
@@ -54,6 +73,8 @@ public class User {
 		
 		return reservations.stream().map(res->{
 			res.event.setReservations(new HashSet<>());
+			res.event.setReservationRef(res.id);
+			res.event.setReservationStatus(res.status);
 			return res.event;
 		}).collect(Collectors.toSet());
 

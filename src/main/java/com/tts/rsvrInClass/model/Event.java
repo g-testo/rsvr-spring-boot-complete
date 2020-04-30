@@ -26,6 +26,9 @@ public class Event {
 	@OneToMany(mappedBy = "event")
     Set<Reservation> reservations;
 	
+	Long reservationRef;
+	String reservationStatus;
+	
 	public Event() {};
 
 	public Event(String name, String location, Float cost, Date eventDate) {
@@ -33,6 +36,22 @@ public class Event {
 		this.location = location;
 		this.cost = cost;
 		this.eventDate = eventDate;
+	}
+	
+	public Long getReservationRef() {
+		return reservationRef;
+	}
+
+	public void setReservationRef(Long reservationRef) {
+		this.reservationRef = reservationRef;
+	}
+
+	public String getReservationStatus() {
+		return reservationStatus;
+	}
+
+	public void setReservationStatus(String reservationStatus) {
+		this.reservationStatus = reservationStatus;
 	}
 
 	public String getName() {
@@ -73,8 +92,10 @@ public class Event {
 
 	public Set<User> getUsers() {
 		
-		return reservations.stream().map(res->{
+		return reservations.stream().map(res->{	
 			res.user.setReservations(new HashSet<>());
+			res.user.setReservationRef(res.id);
+			res.user.setReservationStatus(res.status);
 			return res.user;
 		}).collect(Collectors.toSet());
 
