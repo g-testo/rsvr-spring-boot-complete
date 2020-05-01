@@ -3,6 +3,7 @@ package com.tts.rsvrInClass.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,12 +33,22 @@ public class ReservationController {
 	@PostMapping()
 	public void addReservation(@RequestParam Long userId, @RequestParam Long eventId, @RequestParam(required = false) String status) {
 		if(status == null) {
-			status = "Pending";
+			status = "Not paid";
 		}
 		Event event = eventServiceImpl.findEventById(eventId);
 		User user = userServiceImpl.findUserById(userId);
-		Reservation reservation = new Reservation(user, event, status);
-		reservationRepository.save(reservation);
+		
+		boolean exists = reservationRepository.existsByUserAndEvent(user, event);
+		
+		if(event == null || user == null) {
+			System.out.println("User or Event not found");
+		} else if(exists) {
+			System.out.println("Reservation already exists");
+		}  else {
+			Reservation reservation = new Reservation(user, event, status);
+			reservationRepository.save(reservation);
+		}
+
 	}
 	
 	@PutMapping("/{id}")

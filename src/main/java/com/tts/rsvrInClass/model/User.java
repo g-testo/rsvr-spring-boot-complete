@@ -33,23 +33,7 @@ public class User {
 		this.name = name;
 		this.email = email;
 	}
-
-	public Long getReservationRef() {
-		return reservationRef;
-	}
-
-	public void setReservationRef(Long reservationRef) {
-		this.reservationRef = reservationRef;
-	}
-
-	public String getReservationStatus() {
-		return reservationStatus;
-	}
-
-	public void setReservationStatus(String reservationStatus) {
-		this.reservationStatus = reservationStatus;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -69,7 +53,27 @@ public class User {
 	public Long getId() {
 		return id;
 	}
+	
+	public Long getReservationRef() {
+		return reservationRef;
+	}
 
+	public void setReservationRef(Long reservationRef) {
+		this.reservationRef = reservationRef;
+	}
+
+	public String getReservationStatus() {
+		return reservationStatus;
+	}
+
+	public void setReservationStatus(String reservationStatus) {
+		this.reservationStatus = reservationStatus;
+	}
+	
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+	
 	public Set<Event> getEvents() {
 		
 		return reservations.stream().map(res->{
@@ -79,10 +83,6 @@ public class User {
 			return res.event;
 		}).collect(Collectors.toSet());
 
-	}
-
-	public void setReservations(Set<Reservation> reservations) {
-		this.reservations = reservations;
 	}
 
 	@Override

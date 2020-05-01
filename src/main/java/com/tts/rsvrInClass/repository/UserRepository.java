@@ -7,5 +7,7 @@ import com.tts.rsvrInClass.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+	
 	User findUserById(Long id);
+	
 }

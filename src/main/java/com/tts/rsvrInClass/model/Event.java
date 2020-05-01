@@ -54,6 +54,21 @@ public class Event {
 	public void setReservationStatus(String reservationStatus) {
 		this.reservationStatus = reservationStatus;
 	}
+	
+	public Set<User> getUsers() {
+		
+		return reservations.stream().map(res->{	
+			res.user.setReservations(new HashSet<>());
+			res.user.setReservationRef(res.id);
+			res.user.setReservationStatus(res.status);
+			return res.user;
+		}).collect(Collectors.toSet());
+
+	}
+
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
+	}
 
 	public String getName() {
 		return name;
@@ -89,21 +104,6 @@ public class Event {
 
 	public Long getId() {
 		return id;
-	}
-
-	public Set<User> getUsers() {
-		
-		return reservations.stream().map(res->{	
-			res.user.setReservations(new HashSet<>());
-			res.user.setReservationRef(res.id);
-			res.user.setReservationStatus(res.status);
-			return res.user;
-		}).collect(Collectors.toSet());
-
-	}
-
-	public void setReservations(Set<Reservation> reservations) {
-		this.reservations = reservations;
 	}
 
 	@Override
