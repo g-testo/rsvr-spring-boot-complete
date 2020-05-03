@@ -10,11 +10,6 @@ pipeline {
                 sh 'echo $path'
             }
         }
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
         stage('Test') {
             steps {
                 sh 'mvn test'
@@ -25,9 +20,9 @@ pipeline {
                 }
             }
         }
-        stage('Build Jar') { 
+        stage('Build') {
             steps {
-                sh 'mvn package' 
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Containerize') { 
