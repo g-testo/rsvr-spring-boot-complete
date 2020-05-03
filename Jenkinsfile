@@ -5,13 +5,11 @@ pipeline {
         }
     }
     stages {
-        stage('Initialize'){
+        stage('Build') {
             steps {
-                sh "def dockerHome = tool 'myDocker'"
-                sh 'env.PATH = "${dockerHome}/bin:${env.PATH}"'
+                sh 'echo $path'
             }
         }
-
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
