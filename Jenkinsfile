@@ -1,6 +1,11 @@
 pipeline {
     agent none 
     stages {
+        stage('Setup Environment') {
+            steps {
+                sh 'source /etc/profile'
+            }
+        }
         stage('Example Build') {
             agent none
             steps {
