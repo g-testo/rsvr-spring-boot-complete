@@ -24,9 +24,14 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') { 
+        stage('Build Jar') { 
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                sh './mvnw package && java -jar target/rsvr-in-class-0.0.1.jar' 
+            }
+        }
+        stage('Containerize') { 
+            steps {
+                sh 'docker build -t springio/gs-spring-boot-docker ../deliverables' 
             }
         }
     }
