@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Build Jar') { 
             steps {
-                sh './mvnw package && java -jar target/rsvr-in-class-0.0.1.jar' 
+                sh 'mvn package && java -jar target/rsvr-in-class-0.0.1.jar' 
             }
         }
         stage('Containerize') { 
