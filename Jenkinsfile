@@ -26,12 +26,12 @@ pipeline {
         }
         stage('Build Jar') { 
             steps {
-                sh 'mvn package && java -jar target/rsvr-in-class-0.0.1.jar' 
+                sh 'mvn package' 
             }
         }
         stage('Containerize') { 
             steps {
-                sh 'docker build -t springio/gs-spring-boot-docker ../deliverables' 
+                sh 'docker build -t rsvrproject ../deliverables' 
             }
         }
     }
