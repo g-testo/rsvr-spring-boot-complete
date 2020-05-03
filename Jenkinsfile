@@ -5,7 +5,7 @@ pipeline {
         }
     }
     stages {
-        stage('Build') {
+        stage('Print') {
             steps {
                 sh 'echo $path'
             }
