@@ -5,13 +5,11 @@ pipeline {
         }
     }
     stages {
-
-        
-        stage('Setup Environment') {
-            steps {
-                sh 'source /etc/profile'
-            }
+        stage('Initialize'){
+            def dockerHome = tool 'myDocker'
+            env.PATH = "${dockerHome}/bin:${env.PATH}"
         }
+
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
