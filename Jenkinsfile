@@ -1,23 +1,40 @@
 pipeline {
-    agent none 
+    agent {
+        docker {
+          image 'maven:3-alpine'
+        }
+    }
     stages {
+
+        
         stage('Setup Environment') {
             steps {
                 sh 'source /etc/profile'
             }
         }
-        stage('Example Build') {
-            agent none
+        stage('Build') {
             steps {
-                echo 'Hello, Maven'
-                sh 'mvn --version'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('Example Test') {
-            agent none
+        stage('Test') {
             steps {
-                echo 'Hello, JDK'
-                sh 'java -version'
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Build Jar') { 
+            steps {
+                sh 'mvn package' 
+            }
+        }
+        stage('Containerize') { 
+            steps {
+                sh 'docker build -t rsvrproject ../deliverables' 
             }
         }
     }
