@@ -1,25 +1,13 @@
 pipeline {
     stages {
-
-        
         stage('Setup Environment') {
             steps {
                 sh 'source /etc/profile'
             }
         }
-        agent {
-            docker {
-                image 'maven:3-alpine'
-            }
-        }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        agent {
-            docker {
-                image 'maven:3-alpine'
             }
         }
         stage('Test') {
