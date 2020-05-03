@@ -31,6 +31,7 @@ pipeline {
             }
         }
         stage('Containerize') { 
+            agent { label 'master' }
             steps {
                 sh 'docker build -t rsvrproject ../deliverables' 
             }
