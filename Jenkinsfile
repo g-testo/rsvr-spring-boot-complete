@@ -5,12 +5,17 @@ pipeline {
         }
     }
     stages {
-        stage('Print') {
+        stage('Junit Tests') {
             steps {
-                sh 'echo $path'
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
             }
         }
-        stage('Test') {
+        stage('Selenium Tests') {
             steps {
                 sh 'mvn test'
             }
@@ -23,12 +28,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        stage('Containerize') { 
-            agent { label 'master' }
-            steps {
-                sh 'docker build -t rsvrproject .' 
             }
         }
     }
