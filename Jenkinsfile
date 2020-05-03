@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Junit Tests') {
             steps {
-                sh 'mvn test'
+                sh 'echo $HOME'
             }
             post {
                 always {
