@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-          image 'maven:3-alpine'
-        }
-    }
+    agent none
     stages {
         stage('Junit Tests') {
             agent { label 'master' }
