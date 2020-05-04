@@ -4,7 +4,7 @@ pipeline {
         stage('Junit Tests') {
             agent { label 'master' }
             steps {
-                sh 'echo pwd'
+                sh 'echo $PWD'
             }
         }
     }
