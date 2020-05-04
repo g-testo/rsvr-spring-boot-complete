@@ -6,11 +6,6 @@ pipeline {
             steps {
                 sh 'echo $PWD'
             }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
         }
         stage('Selenium Tests') {
             agent {
