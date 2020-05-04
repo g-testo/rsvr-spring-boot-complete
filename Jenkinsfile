@@ -13,6 +13,11 @@ pipeline {
             }
         }
         stage('Selenium Tests') {
+            agent {
+                docker {
+                image 'maven:3-alpine'
+                }
+            }
             steps {
                 sh 'mvn test'
             }
@@ -23,6 +28,11 @@ pipeline {
             }
         }
         stage('Build') {
+            agent {
+                docker {
+                image 'maven:3-alpine'
+                }
+            }
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
